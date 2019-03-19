@@ -1,3 +1,10 @@
+# This is a lean fork of [original](https://github.com/gabime/spdlog) spdlog project
+All integrated dependencies(fmt, catch) are removed as well as tests and benchmarks
+
+## Original README.md
+
+----
+
 # spdlog
 
 Very fast, header only, C++ logging library. [![Build Status](https://travis-ci.org/gabime/spdlog.svg?branch=master)](https://travis-ci.org/gabime/spdlog)&nbsp; [![Build status](https://ci.appveyor.com/api/projects/status/d2jnxclg20vd0o50?svg=true)](https://ci.appveyor.com/project/gabime/spdlog)

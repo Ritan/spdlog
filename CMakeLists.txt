@@ -52,10 +52,9 @@ endif()
 option(SPDLOG_BUILD_EXAMPLES "Build examples" ${SPDLOG_MASTER_PROJECT})
 option(SPDLOG_BUILD_BENCH "Build benchmarks (Requires https://github.com/google/benchmark.git to be installed)" OFF)
 option(SPDLOG_BUILD_TESTS "Build tests" ${SPDLOG_MASTER_PROJECT})
-option(SPDLOG_FMT_EXTERNAL "Use external fmt library instead of bundled" OFF)
 option(SPDLOG_INSTALL "Generate the install target." ${SPDLOG_MASTER_PROJECT})
 
-if(SPDLOG_FMT_EXTERNAL AND NOT TARGET fmt::fmt)
+if(NOT TARGET fmt::fmt)
     find_package(fmt REQUIRED CONFIG)
 endif()
 
@@ -66,25 +65,10 @@ target_include_directories(
     "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
 )
 
-if(SPDLOG_FMT_EXTERNAL)
-    target_compile_definitions(spdlog INTERFACE SPDLOG_FMT_EXTERNAL)
-    target_link_libraries(spdlog INTERFACE fmt::fmt)
-endif()
+target_compile_definitions(spdlog INTERFACE SPDLOG_FMT_EXTERNAL)
+target_link_libraries(spdlog INTERFACE fmt::fmt)
 
 set(HEADER_BASE "${CMAKE_CURRENT_SOURCE_DIR}/include")
-
-if(SPDLOG_BUILD_EXAMPLES)
-    add_subdirectory(example)
-endif()
-
-if(SPDLOG_BUILD_TESTS)
-    include(CTest)
-    add_subdirectory(tests)
-endif()
-
-if(SPDLOG_BUILD_BENCH)
-    add_subdirectory(bench)
-endif()
 
 #---------------------------------------------------------------------------------------
 # Install/export targets and files
